@@ -1,0 +1,3 @@
+disnake
+squarecloud-api
+python-dotenv
