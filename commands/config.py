@@ -46,9 +46,6 @@ class Config(commands.Cog):
 
     @commands.slash_command(name="config", description="[DEV] Configure as aplicações, serviços e usuários registrados")
     async def config(self, inter: disnake.ApplicationCommandInteraction):
-        if not Perms.is_owner(inter):
-            return await inter.response.send_message("Você não tem permissão para acessar o painel de controle", ephemeral=True)
-        
         embed, components = await Builder(inter).build()
         await inter.response.send_message(embed=embed, components=components, ephemeral=True)
 

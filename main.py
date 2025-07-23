@@ -11,7 +11,7 @@ bot = commands.Bot(command_prefix=commands.when_mentioned, intents=disnake.Inten
 async def on_ready():
     os.system("cls" if os.name == "nt" else "clear")
     print(f"O bot está conectado como {bot.user.name} (ID:{bot.user.id})")
-    print(f"O bot está em {len(bot.guilds)} servidores")
+    print(f"O bot está em {len(bot.guilds)} servidor(es)")
     await bot.change_presence(activity=disnake.CustomActivity(name="💙 squarecloud.app"))
 
 # Carregar comandos do diretório 'commands'
