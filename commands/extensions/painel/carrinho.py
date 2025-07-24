@@ -137,14 +137,10 @@ class Carrinho:
             embed.add_field(name="Plano", value=f"`{carrinho['plano'].capitalize()}`", inline=True)
             embed.add_field(name="Preço", value=f"`R$ {float(carrinho['price']):.2f}`", inline=True)
 
-            components = [
-                disnake.ui.Button(label="Configurar aplicação", style=disnake.ButtonStyle.blurple, custom_id=f"Painel_ConfigurarAplicacao_{inter.user.id}", disabled=True),
-            ]
-
-            return embed, components
+            return embed
 
         @staticmethod
-        def entrega_concluida_builder(inter: disnake.MessageInteraction, app_id: str):
+        def entrega_concluida_builder(inter: disnake.MessageInteraction):
             carrinho = Database.obter("carrinhos.json")[str(inter.user.id)]
             service = Database.obter("services.json")[carrinho["serviceID"]]
 
@@ -157,27 +153,63 @@ class Carrinho:
             embed.add_field(name="Plano", value=f"`{carrinho['plano'].capitalize()}`", inline=True)
             embed.add_field(name="Preço", value=f"`R$ {float(carrinho['price']):.2f}`", inline=True)
 
-            components = [
-                disnake.ui.Button(label="Configurar aplicação", style=disnake.ButtonStyle.blurple, custom_id=f"Painel_ConfigurarAplicacao_{inter.user.id}", disabled=False),
-            ]
-            return embed, components
+            return embed
+
+        @staticmethod
+        def criar_aplicacao(inter: disnake.MessageInteraction, bot_id: str):
+            carrinho = Database.obter("carrinhos.json")[str(inter.user.id)]
+            services = Database.obter("services.json")
+
+            apps = Database.obter("apps.json")
+            apps[bot_id] = {
+                "id": bot_id,
+                "owner": inter.user.id,
+                "serviceID": carrinho["serviceID"],
+                "plano": carrinho["plano"],
+                "price": carrinho["price"],
+                "guild": {"guildID": inter.guild.id, "channelID": carrinho["guild"]["channelID"], "userID": str(inter.user.id)},
+                "payment": {"qrcode": carrinho["payment"]["qrcode"], "qrcodeURL": carrinho["payment"]["qrcodeURL"], "paymentID": carrinho["payment"]["paymentID"]}
+            }
+            Database.salvar("apps.json", apps)
+
+            services[carrinho["serviceID"]]["apps"]["id_list"].append(bot_id)
+            Database.salvar("services.json", services)
+        
+        @staticmethod
+        def criar_atualizar_cliente(inter: disnake.MessageInteraction, bot_id: str):
+            clients = Database.obter("clientes.json")
+            if str(inter.user.id) in clients:
+                clients[str(inter.user.id)]["apps"].append(bot_id)
+            else:
+                clients[str(inter.user.id)] = {
+                    "id": str(inter.user.id),
+                    "name": inter.user.name,
+                    "apps": [bot_id]
+                }
+            Database.salvar("clientes.json", clients)
 
         @staticmethod
         async def entregar(inter: disnake.MessageInteraction):
             carrinho = Database.obter("carrinhos.json")[str(inter.user.id)]
             service = Database.obter("services.json")[carrinho["serviceID"]]
 
-            embed, components = Carrinho.Entrega.entrega_builder(inter)
-            await inter.edit_original_message("", embed=embed, components=components)
+            embed = Carrinho.Entrega.entrega_builder(inter)
+            await inter.edit_original_message("", embed=embed)
             
             bot_id = await SquareCloud.upload_bot(f"{service['apps']['filename']}")
-            await SquareCloud.start_bot(bot_id)
+            try: await SquareCloud.start_bot(bot_id)
+            except Exception: pass
 
-            embed, components = Carrinho.Entrega.entrega_concluida_builder(inter, bot_id)
+            embed = Carrinho.Entrega.entrega_concluida_builder(inter)
             embed.add_field(name="ID da aplicação", value=f"`{bot_id}`", inline=False)
             embed.add_field(name="Informação adicional", value="Este carrinho será excluído em 10 segundos. Enviei uma mensagem privada para você com as instruções de configuração da aplicação.", inline=False)
+            
             await inter.user.send(embed=embed)
-            await inter.edit_original_message(f"{inter.user.mention}", embed=embed, components=components)
+            await inter.edit_original_message(f"{inter.user.mention}", embed=embed)
+            
+            Carrinho.Entrega.criar_aplicacao(inter, bot_id)
+            Carrinho.Entrega.criar_atualizar_cliente(inter, bot_id)
+
             await asyncio.sleep(10)
             Carrinho.cancelar_compra(inter)
             CARRINHO_TIMEOUT_TASKS.pop(str(inter.user.id), None)

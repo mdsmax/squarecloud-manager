@@ -3,7 +3,7 @@ from .list import listar_arquivos
 
 REQUIRED_KEYS = ["MAIN", "MEMORY", "VERSION", "DISPLAY_NAME"]
 
-def verify_squarecloud_config(pasta: str) -> bool:
+def verify_squarecloud(pasta: str):
     arquivos = listar_arquivos(pasta)
     for arquivo in arquivos:
         nome = os.path.basename(arquivo)
@@ -15,7 +15,7 @@ def verify_squarecloud_config(pasta: str) -> bool:
     return False
 
 
-def formatar_config(caminho_arquivo: str) -> dict:
+def formatar_config(caminho_arquivo: str):
     config = {}
     if not os.path.isfile(caminho_arquivo):
         raise FileNotFoundError(f"Arquivo '{caminho_arquivo}' não encontrado.")

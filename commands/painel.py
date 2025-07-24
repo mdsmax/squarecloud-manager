@@ -12,7 +12,7 @@ class Builder:
         apps = Database.obter("apps.json")
         services = Database.obter("services.json")
         user_apps = []
-        for app in apps:
+        for app in apps.values():
             if str(app["owner"]) == str(self.inter.user.id):
                 user_apps.append(app)
 

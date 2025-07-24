@@ -1,1 +1,19 @@
-{}
+{
+    "30bf2a6db1374eb4a77a15f7bd7a0f35": {
+        "id": "30bf2a6db1374eb4a77a15f7bd7a0f35",
+        "owner": 1373429524351418429,
+        "serviceID": "CLnfcuUeQw",
+        "plano": "mensal",
+        "price": 0.0,
+        "guild": {
+            "guildID": 1208212807049543690,
+            "channelID": 1397869380477517844,
+            "userID": "1373429524351418429"
+        },
+        "payment": {
+            "qrcode": null,
+            "qrcodeURL": null,
+            "paymentID": null
+        }
+    }
+}

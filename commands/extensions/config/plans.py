@@ -4,7 +4,7 @@ import disnake
 from disnake.ext import commands
 from database import Database
 from commands.extensions.painel.services import Services
-from functions.gerar_codigo import GerarCodigo
+from functions.gerar_codigo import gerar_codigo
 from functions.cleanup import limpar_temp
 from functions.zip import Zip
 
@@ -72,7 +72,7 @@ class Plans:
                 await inter.response.send_message("O preço do plano deve ser um número válido e maior que 0", ephemeral=True)
                 return
             price = float(price)
-            id = GerarCodigo()
+            id = gerar_codigo()
             planos = Database.obter("services.json")
             planos[id] = {
                 "id": id,
@@ -176,8 +176,8 @@ class Plans:
             def remover_arquivo(id: str):
                 planos = Database.obter("services.json")
                 filename = planos[id]["apps"]["filename"]
-                if filename and os.path.exists(f"database/apps/{filename}"):
-                    os.remove(f"database/apps/{filename}")
+                if filename and os.path.exists(f"{filename}"):
+                    os.remove(f"{filename}")
                 planos[id]["apps"]["filename"] = ""
                 Database.salvar("services.json", planos)
 
@@ -196,14 +196,34 @@ class Plans:
                     try:
                         file = msg.attachments[0]
                         if file.filename.endswith(".zip"):
+                            status = ["🔴", "🔴", "🔴", "🔴"]
+                            steps = [
+                                "Arquivo recebido",
+                                "Arquivo descompactado",
+                                "Arquivo válido",
+                                "Arquivo compactado"
+                            ]
+                            def progresso():
+                                return "Processando arquivo:\n" + "\n".join(f"`{status[i]}` {steps[i]}" for i in range(4))
+
                             filename = f".temp/{id}-{file.filename}"
                             await file.save(filename)
+                            status[0] = "🔵"
+                            await inter.edit_original_message(progresso(), embed=None, components=None)
                             await msg.delete()
+
                             pasta = Zip.descompactar(filename, f".temp/{id}-{file.filename.split('.')[0]}")
-                            if Zip.verify_squarecloud_config(pasta):
+                            status[1] = "🔵"
+                            await inter.edit_original_message(progresso(), embed=None, components=None)
+
+                            if Zip.verify_squarecloud(pasta):
+                                status[2] = "🔵"
+                                await inter.edit_original_message(progresso(), embed=None, components=None)
                                 await asyncio.sleep(3)
-                                try: os.rename(filename, f"sources/{id}.zip")
-                                except: pass
+
+                                Zip.zipar_conteudo(f".temp/{id}-{file.filename.split('.')[0]}", f"sources/{id}.zip")
+                                status[3] = "🔵"
+                                await inter.edit_original_message(progresso(), embed=None, components=None)
 
                                 planos = Database.obter("services.json")
                                 planos[id]["apps"]["filename"] = f"sources/{id}.zip"
@@ -212,6 +232,7 @@ class Plans:
                                 embed, components = Plans.GerenciarPlano.ConfigurarArquivos.configurar_arquivos_builder(inter, id)
                                 await inter.edit_original_message("", embed=embed, components=components)
 
+                                limpar_temp()
                                 return
                             else:
                                 limpar_temp()

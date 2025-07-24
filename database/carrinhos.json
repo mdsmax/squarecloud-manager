@@ -1,17 +1,1 @@
-{
-    "1373429524351418429": {
-        "serviceID": "CLnfcuUeQw",
-        "price": 0.0,
-        "plano": "trimensal",
-        "guild": {
-            "guildID": 1208212807049543690,
-            "channelID": 1397855379257294859,
-            "userID": "1373429524351418429"
-        },
-        "payment": {
-            "qrcode": null,
-            "qrcodeURL": null,
-            "paymentID": null
-        }
-    }
-}
+{}

@@ -6,7 +6,9 @@
         "pre-description": "Bot de VENDAS integrado com TICKET e AUTH",
         "price": 0.0,
         "apps": {
-            "id_list": [],
+            "id_list": [
+                "30bf2a6db1374eb4a77a15f7bd7a0f35"
+            ],
             "filename": "sources/CLnfcuUeQw.zip"
         }
     }

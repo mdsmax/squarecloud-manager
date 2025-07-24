@@ -34,8 +34,8 @@ for root, dirs, files in os.walk("commands"):
             module_path = path.replace(os.sep, ".")[:-3]
             try:
                 bot.load_extension(module_path)
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"Erro ao carregar o módulo {module_path}: {e}")
 
 dotenv.load_dotenv()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
