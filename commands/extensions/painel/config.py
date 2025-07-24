@@ -75,26 +75,20 @@ class Config:
             app_status = None
             try:
                 app_status = await SquareCloud.get_bot_status(app["id"])
-                if app_status.running or app_status.exited: embed.add_field(name="Status da aplicação", value=f"`{'Ligada' if app_status.running else 'Desligada'}`", inline=True)
-                if app_status.cpu: embed.add_field(name="CPU", value=f"`{app_status.cpu}`", inline=True)
-                if app_status.ram: embed.add_field(name="RAM", value=f"`{app_status.ram}`", inline=True)
-                if app_status.uptime: embed.add_field(name="Uptime", value=f"<t:{app_status.uptime // 1000}:R> (<t:{app_status.uptime // 1000}:f>)", inline=False)
-                if app_status.network['now']: embed.add_field(name="Rede (agora)", value=f"`{app_status.network['now']}`", inline=True)
-                if app_status.storage: embed.add_field(name="Armazenamento", value=f"`{app_status.storage}`", inline=True)
+                embed.add_field(name="Status da aplicação", value=f"`{'Ligada' if app_status.running else 'Desligada'}`", inline=True)
+                embed.add_field(name="CPU", value=f"`{app_status.cpu}`", inline=True)
+                embed.add_field(name="RAM", value=f"`{app_status.ram}`", inline=True)
+                embed.add_field(name="Uptime", value=f"<t:{app_status.uptime // 1000}:R> (<t:{app_status.uptime // 1000}:f>)", inline=False)
+                embed.add_field(name="Rede (agora)", value=f"`{app_status.network['now']}`", inline=True)
+                embed.add_field(name="Armazenamento", value=f"`{app_status.storage}`", inline=True)
 
             except Exception:
-                if app_status.running != bool:
-                    embed.add_field(name="Status da aplicação", value=f"`Não encontrado`", inline=True)
-                if not app_status.cpu:
-                    embed.add_field(name="CPU", value=f"`Não encontrado`", inline=True)
-                if not app_status.ram:
-                    embed.add_field(name="RAM", value=f"`Não encontrado`", inline=True)
-                if not app_status.uptime:
-                    embed.add_field(name="Uptime", value=f"`Não encontrado`", inline=True)
-                if not app_status.network['now']:
-                    embed.add_field(name="Rede (agora)", value=f"`Não encontrado`", inline=True)
-                if not app_status.storage:
-                    embed.add_field(name="Armazenamento", value=f"`Não encontrado`", inline=True)
+                embed.add_field(name="Status da aplicação", value=f"`Não encontrado`", inline=True)
+                embed.add_field(name="CPU", value=f"`Não encontrado`", inline=True)
+                embed.add_field(name="RAM", value=f"`Não encontrado`", inline=True)
+                embed.add_field(name="Uptime", value=f"`Não encontrado`", inline=True)
+                embed.add_field(name="Rede (agora)", value=f"`Não encontrado`", inline=True)
+                embed.add_field(name="Armazenamento", value=f"`Não encontrado`", inline=True)
 
             if app_status:
                 button_gerenciarstatus = {

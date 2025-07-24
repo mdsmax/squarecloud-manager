@@ -122,7 +122,6 @@ class Apps:
             embed, components = Config.aplicacoes_builder(None, id)
             components.pop(1)
             components.append([
-                disnake.ui.Button(label="Excluir cliente", style=disnake.ButtonStyle.red, custom_id=f"Config_AplicacoesUsuarios_DeletarCliente_{id}"),
                 disnake.ui.Button(label="Voltar", custom_id="Config_AplicacoesUsuarios")
             ])
             return embed, components
@@ -155,17 +154,16 @@ class AppsExtension(commands.Cog):
             aplicacoes.pop(id)
             Database.salvar("apps.json", aplicacoes)
 
+            services = Database.obter("services.json")
+            for service in services.values():
+                if id in service["apps"]["id_list"]:
+                    service["apps"]["id_list"].remove(id)
+                    break
+            Database.salvar("services.json", services)
+
             try: await SquareCloud.delete_bot(id)
             except: pass
-
-            embed, components = Apps.aplicacoes_usuarios_builder(inter)
-            await inter.response.edit_message(embed=embed, components=components)
-        
-        elif inter.component.custom_id.startswith("Config_AplicacoesUsuarios_DeletarCliente_"):
-            id = inter.component.custom_id.split("_")[-1]
-            clientes = Database.obter("clients.json")
-            clientes.pop(id)
-            Database.salvar("clients.json", clientes)
+   
             embed, components = Apps.aplicacoes_usuarios_builder(inter)
             await inter.response.edit_message(embed=embed, components=components)
 

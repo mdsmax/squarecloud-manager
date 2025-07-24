@@ -12,6 +12,7 @@ class Builder:
     async def build(self):
         account_informations = await SquareCloud.get_account_informations()
         clients = Database.obter("clientes.json")
+        apps = Database.obter("apps.json")
         plan = account_informations['plan']
         memory_used = plan['memory']['used']
         memory_limit = plan['memory']['limit']
@@ -29,9 +30,9 @@ class Builder:
         )
         embed.add_field(name="Plano", value=f"`{plan['name'].capitalize()}`", inline=True)
         embed.add_field(name="RAM utilizada", value=f"`{memory_used}/{memory_limit} MB ({memory_percent_str})`", inline=True)
-        embed.add_field(name="Informações", value=f"`{account_informations['apps']} aplicações` | `{len(clients)} clientes` | `{len(Database.obter('services.json'))} planos`", inline=True)
-        embed.add_field(name="Email", value=f"||`{account_informations['email']}`||", inline=True)
+        embed.add_field(name="Informações da plataforma", value=f"`{len(apps)} aplicações` | `{len(clients)} clientes` | `{len(Database.obter('services.json'))} planos`", inline=False)
         embed.add_field(name="ID do usuário", value=f"||`{account_informations['user_id']}`||", inline=True)
+        embed.add_field(name="Email", value=f"||`{account_informations['email']}`||", inline=True)
 
         components = [
             disnake.ui.Button(label="Planos e arquivos", style=disnake.ButtonStyle.blurple, custom_id="Config_PlanosArquivos"),
