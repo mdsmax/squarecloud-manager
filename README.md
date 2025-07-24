@@ -1,4 +1,4 @@
-oi Este projeto foi desenvolvido para a competição oficial da [Square Cloud](https://squarecloud.app/).
+O projeto foi desenvolvido para a competição oficial da [Square Cloud](https://squarecloud.app/).
 
 ---
 
