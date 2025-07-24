@@ -1,3 +1,5 @@
 disnake
 squarecloud-api
+mercadopago
+requests
 python-dotenv

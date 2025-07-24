@@ -1,0 +1,13 @@
+{
+    "CLnfcuUeQw": {
+        "id": "CLnfcuUeQw",
+        "name": "Bot de Vendas",
+        "description": "Voc\u00ea precisa de um **bot para sua loja do Discord?**\nConhe\u00e7a o `eSellers`, um bot feito especialmente para ajudar voc\u00ea e seus clientes.\nCom integra\u00e7\u00e3o a v\u00e1rios pagamentos autom\u00e1ticos, tamb\u00e9m vem com ticket personaliz\u00e1vel e auth para recuperar seus membros caso ocorra um problema com seu servidor.",
+        "pre-description": "Bot de VENDAS integrado com TICKET e AUTH",
+        "price": "5.00",
+        "apps": {
+            "id_list": [],
+            "filename": "sources/CLnfcuUeQw.zip"
+        }
+    }
+}
