@@ -4,11 +4,15 @@ from disnake.ext import commands
 import dotenv
 import os
 
+from functions.cleanup import limpar_temp, limpar_temp_task
+
 bot = commands.Bot(command_prefix=commands.when_mentioned, intents=disnake.Intents.all())
 
 @bot.event
 async def on_ready():
     os.system("cls" if os.name == "nt" else "clear")
+    limpar_temp()
+
     print("""
   _______                                  _______ __                __ 
  |   _   .-----.--.--.---.-.----.-----.   |   _   |  .-----.--.--.--|  |
@@ -42,4 +46,5 @@ OWNER_ID = os.getenv("OWNER_ID")
 if not TOKEN or not SQUARECLOUD_TOKEN or not MERCADOPAGO_TOKEN or not OWNER_ID:
     raise ValueError("Variáveis de ambiente não encontradas - configure-as no arquivo .env")
 
+bot.loop.create_task(limpar_temp_task())
 bot.run(TOKEN)

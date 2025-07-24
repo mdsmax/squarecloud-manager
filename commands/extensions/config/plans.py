@@ -5,6 +5,7 @@ from disnake.ext import commands
 from database import Database
 from commands.extensions.painel.services import Services
 from functions.gerar_codigo import GerarCodigo
+from functions.cleanup import limpar_temp
 from functions.zip import Zip
 
 class Plans:
@@ -38,7 +39,7 @@ class Plans:
         options = [
             disnake.SelectOption(
                 label=s["name"],
-                description=f"R$ {str(s['price']).replace('.', ',')} | {s['pre-description']}",
+                description=f"R$ {float(s['price']):.2f}".replace('.', ',') + f" | {s['pre-description']}",
                 value=s["id"]
             ) for s in services.values()
         ] or [disnake.SelectOption(label="Nenhum plano disponível")]
@@ -67,10 +68,11 @@ class Plans:
             description = inter.text_values.get("description") or "Nenhuma descrição disponível"
             pre_description = inter.text_values.get("pre-description") or "Nenhuma pré-descrição disponível"
             price = Plans.validar_preco(inter.text_values["price"])
-            id = GerarCodigo()
             if not price:
                 await inter.response.send_message("O preço do plano deve ser um número válido e maior que 0", ephemeral=True)
                 return
+            price = float(price)
+            id = GerarCodigo()
             planos = Database.obter("services.json")
             planos[id] = {
                 "id": id,
@@ -100,10 +102,11 @@ class Plans:
                 description = inter.text_values.get("description") or "Nenhuma descrição disponível"
                 pre_description = inter.text_values.get("pre-description") or "Nenhuma pré-descrição disponível"
                 price = Plans.validar_preco(inter.text_values["price"])
-                id = self.id
                 if not price:
                     await inter.response.send_message("O preço do plano deve ser um número válido e maior que 0", ephemeral=True)
                     return
+                price = float(price)
+                id = self.id
                 planos = Database.obter("services.json")
                 planos[id].update({
                     "id": id,
@@ -128,7 +131,7 @@ class Plans:
                 ),
                 color=disnake.Color.blurple()
             )
-            embed.add_field(name="Preço (mensal) do plano", value=f"`R$ {plano['price'].replace('.', ',')}`", inline=True)
+            embed.add_field(name="Preço (mensal) do plano", value=f"`R$ {float(plano['price']):.2f}`".replace('.', ','), inline=True)
             embed.add_field(name="Aplicações registradas no plano", value=f"`{len(plano['apps']['id_list'])}`", inline=True)
             embed.add_field(name="Arquivo disponível", value=f"`{'Sim' if plano['apps']['filename'] else 'Não'}`", inline=True)
             components = [
@@ -211,23 +214,16 @@ class Plans:
 
                                 return
                             else:
-                                try: os.remove(pasta)
-                                except: pass
-                                try: os.remove(filename)
-                                except: pass
-                                
+                                limpar_temp()
                                 await inter.followup.send("O arquivo `.zip` não possui um arquivo de configuração da SquareCloud válido.", ephemeral=True)
                                 embed, components = Plans.GerenciarPlano.ConfigurarArquivos.configurar_arquivos_builder(inter, id)
                                 await inter.edit_original_message("", embed=embed, components=components)
                                 return
                             
                     except Exception as e:
-                        try: os.remove(filename)
-                        except: pass
-                        try: os.remove(pasta)
-                        except: pass
-
+                        limpar_temp()
                         print(e)
+                        
                         await inter.followup.send(
                             content=f"Ocorreu um erro ao adicionar o arquivo. Tente novamente enviando um arquivo `.zip` válido.",
                             ephemeral=True

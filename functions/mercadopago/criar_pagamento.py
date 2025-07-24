@@ -22,5 +22,4 @@ def criar_pagamento(valor: float):
         return False
 
     qrcodeURL = criar_qr_code(qr_code)
-
     return qr_code, qrcodeURL, payment
