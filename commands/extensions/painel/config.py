@@ -83,9 +83,6 @@ class Config:
                 embed.add_field(name="Armazenamento", value=f"`{app_status.storage}`", inline=True)
 
             except Exception:
-                embed.add_field(name="Status da aplicação", value=f"`Não encontrado`", inline=True)
-                embed.add_field(name="CPU", value=f"`Não encontrado`", inline=True)
-                embed.add_field(name="RAM", value=f"`Não encontrado`", inline=True)
                 embed.add_field(name="Uptime", value=f"`Não encontrado`", inline=True)
                 embed.add_field(name="Rede (agora)", value=f"`Não encontrado`", inline=True)
                 embed.add_field(name="Armazenamento", value=f"`Não encontrado`", inline=True)
