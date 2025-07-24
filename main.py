@@ -6,7 +6,7 @@ import os
 
 from functions.cleanup import limpar_temp, limpar_temp_task
 
-bot = commands.Bot(command_prefix=commands.when_mentioned, intents=disnake.Intents.all())
+bot = commands.Bot(command_prefix=commands.when_mentioned, intents=disnake.Intents.all(), reload=True)
 
 @bot.event
 async def on_ready():

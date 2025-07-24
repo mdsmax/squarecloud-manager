@@ -203,9 +203,11 @@ class Carrinho:
 
             embed = Carrinho.Entrega.entrega_concluida_builder(inter)
             embed.add_field(name="ID da aplicação", value=f"`{bot_id}`", inline=False)
-            embed.add_field(name="Informação adicional", value="Este carrinho será excluído em 10 segundos. Enviei uma mensagem privada para você com as instruções de configuração da aplicação.", inline=False)
             
-            await inter.user.send(embed=embed)
+            try: await inter.user.send(embed=embed)
+            except: pass
+            
+            embed.add_field(name="Informação adicional", value="Este carrinho será excluído em 10 segundos. Enviei uma mensagem privada para você com as instruções de configuração da aplicação.", inline=False)
             await inter.edit_original_message(f"{inter.user.mention}", embed=embed)
             
             Carrinho.Entrega.criar_aplicacao(inter, bot_id)
