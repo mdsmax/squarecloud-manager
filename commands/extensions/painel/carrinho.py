@@ -163,6 +163,7 @@ class Carrinho:
             apps = Database.obter("apps.json")
             apps[bot_id] = {
                 "id": bot_id,
+                "name": services[carrinho["serviceID"]]["name"],
                 "owner": inter.user.id,
                 "serviceID": carrinho["serviceID"],
                 "plano": carrinho["plano"],

@@ -35,7 +35,7 @@ class Builder:
 
         components = [
             disnake.ui.Button(label="Planos e arquivos", style=disnake.ButtonStyle.blurple, custom_id="Config_PlanosArquivos"),
-            disnake.ui.Button(label="Aplicações e usuários", style=disnake.ButtonStyle.blurple, custom_id="Config_AplicacoesUsuarios"),
+            disnake.ui.Button(label="Aplicações e usuários", custom_id="Config_AplicacoesUsuarios"),
             disnake.ui.Button(label="Rendimentos", style=disnake.ButtonStyle.green, custom_id="Config_Rendimentos"),
         ]
 

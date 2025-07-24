@@ -23,7 +23,7 @@ class Services:
         
         components = [
             disnake.ui.StringSelect(
-                placeholder=f"[{len(services)}] Selecione o serviço que deseja adquirir",
+                placeholder=f"Selecione o serviço que deseja adquirir",
                 options=options,
                 custom_id="Painel_SelecionarServico",
                 disabled=True if len(services) == 0 else False

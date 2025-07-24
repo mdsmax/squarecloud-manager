@@ -45,7 +45,7 @@ class Plans:
         ] or [disnake.SelectOption(label="Nenhum plano disponível")]
         components = [
             disnake.ui.StringSelect(
-                placeholder=f"[{len(services)}] Selecione o plano que deseja configurar/editar",
+                placeholder=f"Selecione o plano que deseja configurar/editar",
                 options=options,
                 custom_id="Config_SelecionarPlano",
                 disabled=not bool(services)
