@@ -1,4 +1,4 @@
-Este projeto foi desenvolvido para a competição oficial da [Square Cloud](https://squarecloud.app/).
+O projeto foi desenvolvido para a competição oficial da [Square Cloud](https://squarecloud.app/).
 
 ---
 
@@ -24,8 +24,8 @@ Este projeto foi desenvolvido para a competição oficial da [Square Cloud](http
 ## Instalação do projeto
 
 ```bash
-git clone https://github.com/seu-usuario/square-manager-bot.git
-cd square-manager-bot
+git clone https://github.com/mdsmax/squarecloud-manager.git
+cd squarecloud-manager
 pip install -r requirements.txt
 python main.py
 ```
