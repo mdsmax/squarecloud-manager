@@ -21,7 +21,7 @@ class Plans:
         try:
             price = float(price)
             if price < 0:
-                raise ValueError
+                return None
             return "{:.2f}".format(price)
         except ValueError:
             return None

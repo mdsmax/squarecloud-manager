@@ -3,7 +3,6 @@ from disnake.ext import commands
 
 from database import Database
 from functions.perms import Perms
-from functions.squarecloud import SquareCloud
 
 from commands.extensions.painel.config import Config
 

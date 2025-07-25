@@ -18,7 +18,7 @@ def verify_squarecloud(pasta: str):
 def formatar_config(caminho_arquivo: str):
     config = {}
     if not os.path.isfile(caminho_arquivo):
-        raise FileNotFoundError(f"Arquivo '{caminho_arquivo}' não encontrado.")
+        return None
 
     with open(caminho_arquivo, "r", encoding="utf-8") as f:
         for linha in f:

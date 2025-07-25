@@ -3,7 +3,6 @@ import zipfile
 import shutil
 
 def zipar_conteudo(pasta_origem, zip_destino):
-    # Detecta se só tem uma subpasta (a 'pasta antes da raiz')
     itens = [f for f in os.listdir(pasta_origem) if not f.startswith('.')]
     if len(itens) == 1 and os.path.isdir(os.path.join(pasta_origem, itens[0])):
         nova_raiz = os.path.join(pasta_origem, itens[0])

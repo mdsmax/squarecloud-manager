@@ -3,7 +3,6 @@ from disnake.ext import commands
 from functions.perms import Perms
 from database import Database
 from functions.squarecloud import SquareCloud
-from commands.extensions.painel.carrinho import Carrinho
 
 class Deploy(commands.Cog):
     def __init__(self, bot):

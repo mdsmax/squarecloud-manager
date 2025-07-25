@@ -10,8 +10,8 @@ def limpar_temp(temp_dir=".temp"):
                 os.remove(path)
             elif os.path.isdir(path):
                 shutil.rmtree(path)
-        except Exception as e:
-            print(f"Erro ao remover {path}: {e}")
+        except Exception:
+            pass
 
 async def limpar_temp_task():
     while True:

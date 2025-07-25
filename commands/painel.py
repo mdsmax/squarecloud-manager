@@ -1,7 +1,5 @@
 import disnake
 from disnake.ext import commands
-
-from functions.squarecloud import SquareCloud
 from database import Database
 
 class Builder:

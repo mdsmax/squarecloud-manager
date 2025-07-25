@@ -64,8 +64,9 @@ class Carrinho:
         carrinho_obj = inter.guild.get_channel_or_thread(carrinho["guild"]["channelID"])
         try:
             await carrinho_obj.delete()
-        except Exception as e:
-            print(f"Erro ao deletar canal do carrinho: {e}")
+        except Exception:
+            pass
+
         Carrinho.cancelar_compra(inter)
         CARRINHO_TIMEOUT_TASKS.pop(str(inter.user.id), None)
 
