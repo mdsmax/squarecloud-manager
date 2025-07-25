@@ -1,7 +1,3 @@
-O projeto foi desenvolvido para a competição oficial da [Square Cloud](https://squarecloud.app/).
-
----
-
 ## Funcionalidades e comandos
 - `/painel` > Painel disponível para todos os usuários, permitindo a compra de serviços facilitada e gerenciamento das suas aplicações
 - `/config` > Painel de configuração para o dono do Bot, permitindo a configuração e gerenciação de planos, usuários e aplicações.
@@ -13,7 +9,7 @@ O projeto foi desenvolvido para a competição oficial da [Square Cloud](https:/
 
 ## Informações das tecnologias usadas
 
-- [Python](https://www.python.org/)
+- [python](https://www.python.org/)
 - [disnake](https://github.com/DisnakeDev/disnake)
 - [squarecloud-api](https://pypi.org/project/squarecloud-api/)
 - [python-dotenv](https://pypi.org/project/python-dotenv/)
@@ -21,7 +17,7 @@ O projeto foi desenvolvido para a competição oficial da [Square Cloud](https:/
 
 ---
 
-## Instalação do projeto
+## Instalaçao do projeto
 
 ```bash
 git clone https://github.com/mdsmax/squarecloud-manager.git
@@ -37,10 +33,11 @@ SQUARECLOUD_TOKEN=
 MERCADOPAGO_TOKEN=
 OWNER_ID=
 ```
+E configure-o com as suas informações
 
 ---
 
-## Screenshots
+## Previews
 
 ![Painel de controle](https://cdn.discordapp.com/attachments/1398062739074846851/1398062746918064169/image.png?ex=6883fee5&is=6882ad65&hm=c09ad29d4f42932cb0c18be1455dce341896f57ab84530093215377b6f34397c&)
 
